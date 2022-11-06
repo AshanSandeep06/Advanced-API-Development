@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Knight-Rider</title>
+    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: rgba(0, 0, 0, 0.93);
+        }
+
+        #container {
+            display: flex;
+            height: 70px;
+        }
+
+        #container > div {
+            width: 100%;
+            height: 70px;
+            border: 1px solid lightgray;
+        }
+
+        button {
+            padding: 8px 30px 8px 30px !important;
+        }
+    </style>
+
+</head>
+<body>
+
+<section class="container-fluid">
+    <section class="row mt-5">
+        <div class="col-12">
+            <h1 class="text-center text-white">Knight-Rider</h1>
+        </div>
+    </section>
+    <section class="row mt-5">
+        <section id="container" class="col-12">
+            <div id="div-01"></div>
+            <div id="div-02"></div>
+            <div id="div-03"></div>
+            <div id="div-04"></div>
+            <div id="div-05"></div>
+            <div id="div-06"></div>
+        </section>
+    </section>
+    <section class="row justify-content-center mt-5">
+        <div class="col-3 d-flex justify-content-around">
+            <button class="btn btn-primary pl-5 pr-5" id="btnStart">Start</button>
+            <button class="btn btn-danger pl-5 pr-5" id="btnStop">Stop</button>
+        </div>
+    </section>
+</section>
+
+<script src="../../assets/js/jquery-3.6.1.min.js"></script>
+<script src="../../assets/js/bootstrap.min.js"></script>
+
+<script>
+    let leftColors = ['white', 'white', 'white', 'white', 'white', 'white', '#d3c5c5', '#be7474', '#cd4a4a', '#b83030', '#c52525', '#dc1e1e'];
+    let rightColors = ['white', 'white', 'white', 'white', 'white', 'white', '#dc1e1e', '#c52525', '#b83030', '#cd4a4a', '#be7474', '#d3c5c5'];
+
+    var count = 0;
+    let timerId = -1;
+
+    const music = new Audio('../../assets/audio/Knight-Rider-Theme-Song.mp3');
+
+    function leftAnimation() {
+        leftColors.unshift(leftColors.pop());
+
+        for (let i = 0; i < leftColors.length / 2; i++) {
+            $('#div-0' + (i + 1)).css('background-color', leftColors[i]);
+        }
+    }
+
+    function rightAnimation() {
+        if (count >= rightColors.length + leftColors.length) {
+            count = 0;
+        }
+        rightColors.push(rightColors.shift());
+
+        for (let i = 0; i < rightColors.length / 2; i++) {
+            $('#div-0' + (i + 1)).css('background-color', rightColors[i]);
+        }
+    }
+
+    function animate() {
+        count++;
+        if (count <= 12) {
+            leftAnimation();
+        } else {
+            rightAnimation();
+        }
+    }
+
+    function renderKnightRider() {
+        $('#container > div').css('background-color', 'white');
+        animate();
+    }
+
+    $('#btnStart').on('click', function () {
+        clearInterval(timerId);
+        timerId = setInterval(renderKnightRider, 100);
+        music.play();
+        music.loop = true;
+    });
+
+    $('#btnStop').on('click', function () {
+        clearInterval(timerId);
+        music.pause();
+    });
+
+</script>
+</body>
+</html>
