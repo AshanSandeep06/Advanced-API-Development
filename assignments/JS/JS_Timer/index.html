@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task-01</title>
+    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+
+    <style>
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        main {
+            width: max-content;
+            height: max-content;
+        }
+
+        body > main > div:nth-child(2) {
+            display: flex;
+            width: 400px;
+            justify-content: center;
+            margin-top: 25px;
+            margin-left: 20px;
+            column-gap: 50px;
+        }
+
+        #display {
+            width: 400px;
+            height: 400px;
+            border: 2px solid black;
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+
+        button {
+            padding: 10px 24px 10px 24px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            color: white;
+        }
+
+        #btnStart {
+            background-color: green;
+        }
+
+        #btnStop {
+            background-color: red;
+        }
+    </style>
+
+</head>
+<body>
+
+<main>
+    <div id="display"></div>
+
+    <div>
+        <button id="btnStart">Start</button>
+        <button id="btnStop">Stop</button>
+    </div>
+</main>
+
+<script src="../../assets/js/jquery-3.6.1.min.js"></script>
+<script src="../../assets/js/bootstrap.min.js"></script>
+
+<script>
+
+    let colors = ['blue', 'red', 'green', 'yellow', 'deeppink', 'orange'];
+
+    let timerId = -1;
+    var count = 0;
+    var bool = false;
+
+    var timers = 0;
+
+    function colorAnimation() {
+        $('#display').css('background-color', colors[count++]);
+
+        if (colors.length === count) {
+            count = 0;
+        }
+    }
+
+    $('#btnStart').on('click', function () {
+        clearInterval(timerId);
+        timerId = setInterval(colorAnimation, 100);
+    });
+
+    $('#btnStop').click(function () {
+        clearInterval(timerId);
+    });
+
+</script>
+</body>
+</html>
