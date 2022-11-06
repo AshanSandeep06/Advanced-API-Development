@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS-Queue</title>
+    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+
+    <style>
+        #txtColor {
+            height: 33px;
+        }
+
+        #imgShop {
+            background: url("../../assets/img/shop.png");
+            background-position: center;
+            background-size: cover;
+            height: 150px;
+            width: 160px;
+        }
+
+        #secondSection > section:first-child {
+            border-bottom: 3px solid black;
+            gap: 18px;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        #secondSection > section:first-child > div {
+            width: 120px;
+            height: 55px;
+            background-color: red;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+        }
+
+        #secondSection > section:first-child > div > h1 {
+            font-size: 20px;
+            width: max-content;
+            height: max-content;
+            margin: 0;
+        }
+    </style>
+
+</head>
+<body>
+<main class="container-fluid">
+    <section class="row">
+        <section class="col-4 mt-3 mx-2">
+            <div class="mb-3">
+                <label for="txtName" class="form-label">Enter a Name :</label>
+                <input type="text" class="form-control" id="txtName">
+            </div>
+
+            <div class="mb-3">
+                <label for="txtColor" class="form-label">Choose a Color</label>
+                <input type="color" class="form-control" id="txtColor" value="#203EB6"
+                       title="Choose your color">
+            </div>
+
+            <div class="mb-3 mt-4">
+                <button id="btnAddToQueue" type="button" class="btn btn-success">Add To Queue</button>
+            </div>
+        </section>
+    </section>
+
+    <section id="secondSection" class="row">
+        <section id="container" class="col-9 d-flex mx-4">
+
+        </section>
+
+        <div id="imgShop" class="col-3"></div>
+    </section>
+</main>
+
+<script src="../../assets/js/jquery-3.6.1.min.js"></script>
+<script src="../../assets/js/bootstrap.min.js"></script>
+
+<script>
+
+    let persons = [{name: 'Ashan', color: "#1337C9"}, {name: 'Chamara', color: 'red'}, {
+        name: 'Ruwan',
+        color: 'orange'
+    }];
+
+    $(function () {
+        renderQueue();
+        setInterval(renderQueue, 1000);
+    });
+
+    function renderQueue() {
+        $('#container').empty();
+
+        for (let i = 0; i < persons.length; i++) {
+            $('#container').append(`<div style="background-color: ${persons[i].color}"><h1>${persons[i].name}</h1></div>`);
+        }
+
+        persons.unshift(persons.pop());
+    }
+
+    $('#btnAddToQueue').on('click', function () {
+        persons.push({name: $('#txtName').val(), color: $('#txtColor').val()});
+    });
+
+</script>
+
+</body>
+</html>
